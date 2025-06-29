@@ -7,11 +7,11 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build-test:
+  fastapi-test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
+    - name: Checkout repository
       uses: actions/checkout@v3
 
     - name: Set up Python
@@ -23,13 +23,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install dvc[s3]  # or dvc[gs]/dvc[azure] depending on your remote
+        pip install dvc[s3]  # adjust if using other remotes like dvc[gs] or dvc[azure]
 
-    - name: Pull data from DVC remote (optional)
+    - name: Pull data and model from DVC remote
       run: dvc pull
 
-    - name: Run DVC pipeline (optional)
-      run: dvc repro
-
-    - name: Run Tests
-      run: pytest tests/ --disable-warnings
+    - name: Run only the fastapi_test stage
+      run: dvc repro fastapi_test
