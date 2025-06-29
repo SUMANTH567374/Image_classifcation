@@ -13,7 +13,9 @@ def test_root_endpoint():
     assert response.json() == {"message": "Welcome to AI MedScan Inference API 🚑"}
 
 def test_predict_endpoint():
+    """Test the /predict POST endpoint with an actual image file"""
     test_image_path = "data/raw/test/person102_bacteria_487.jpeg"
+
     assert os.path.exists(test_image_path), f"Test image not found: {test_image_path}"
 
     with open(test_image_path, "rb") as image_file:
@@ -23,6 +25,7 @@ def test_predict_endpoint():
         )
 
     assert response.status_code == 200
+
     json_data = response.json()
     assert "prediction" in json_data
     assert "confidence" in json_data
