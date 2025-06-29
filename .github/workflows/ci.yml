@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: 🚀 Run Tests
+    name: 🚀 Run Tests and DVC Pipeline
     runs-on: ubuntu-latest
 
     steps:
@@ -24,6 +24,20 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install dvc[s3]  # Change to your remote type: s3 / gdrive / azure etc.
+
+      - name: 📡 Configure DVC Remote (if needed)
+        run: |
+          dvc remote list  # Ensure remote is already configured in dvc config
+        continue-on-error: true
+
+      - name: ⬇️ Pull DVC Data
+        run: |
+          dvc pull --force
+
+      - name: 🔁 Run DVC Pipeline
+        run: |
+          dvc repro
 
       - name: ✅ Run FastAPI Tests
         run: |
