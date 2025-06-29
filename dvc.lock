@@ -132,8 +132,3 @@ stages:
       hash: md5
       md5: 39638044ab6f936a0e40b439ffa6385f
       size: 1380
-    outs:
-    - path: tests/fastapi_test_output.txt
-      hash: md5
-      md5: 69d54c5d9539ce6d43914be40db3a047
-      size: 41
