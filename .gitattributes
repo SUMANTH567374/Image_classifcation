@@ -1,0 +1,13 @@
+# Auto normalize line endings
+* text=auto
+
+# Windows shell scripts
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+*.cmd text eol=crlf
+
+# Unix shell scripts
+*.sh text eol=lf
+
+# Python and other code
+*.py text eol=lf
