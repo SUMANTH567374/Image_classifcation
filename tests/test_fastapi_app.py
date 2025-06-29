@@ -1,0 +1,30 @@
+import os
+import sys
+from fastapi.testclient import TestClient
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from fast_api.app import app
+
+client = TestClient(app)
+
+def test_root_endpoint():
+    response = client.get("/")
+    assert response.status_code == 200
+    assert response.json() == {"message": "Welcome to AI MedScan Inference API 🚑"}
+
+def test_predict_endpoint():
+    test_image_path = "data/raw/test/person102_bacteria_487.jpeg"
+    assert os.path.exists(test_image_path), f"Test image not found: {test_image_path}"
+
+    with open(test_image_path, "rb") as image_file:
+        response = client.post(
+            "/predict",
+            files={"file": ("filename.jpg", image_file, "image/jpeg")}
+        )
+
+    assert response.status_code == 200
+    json_data = response.json()
+    assert "prediction" in json_data
+    assert "confidence" in json_data
+    assert isinstance(json_data["prediction"], str)
+    assert isinstance(json_data["confidence"], float)

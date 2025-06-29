@@ -1,0 +1,54 @@
+stages:
+  preprocess:
+    cmd: python src/data/preprocess.py
+    deps:
+      - src/data/preprocess.py
+      - data/raw/train.csv
+      - data/raw/test.csv
+    outs:
+      - data/processed/train
+      - data/processed/test
+      - data/processed/train_processed.csv
+      - data/processed/test_processed.csv
+
+  train:
+    cmd: python src/models/train.py
+    deps:
+      - src/models/train.py
+      - src/models/model.py
+      - src/data/dataloader.py
+      - data/processed/train_processed.csv
+      - data/processed/test_processed.csv
+      - params.yaml
+    params:
+      - training.batch_size
+      - training.num_epochs
+      - training.learning_rate
+      - training.img_size
+      - training.num_workers
+      - model.num_classes
+    outs:
+      - models/best_model.pth
+
+  evaluate:
+    cmd: python src/evaluate/evaluate_model.py
+    deps:
+      - src/evaluate/evaluate_model.py
+      - src/models/model.py
+      - src/data/dataloader.py
+      - models/best_model.pth
+      - data/processed/test_processed.csv
+      - params.yaml
+    params:
+      - model.num_classes
+    outs:
+      - report/metrics.json
+
+  fastapi_test:
+    cmd: pytest tests/test_fastapi_app.py --disable-warnings --maxfail=1
+    deps:
+      - tests/test_fastapi_app.py
+      - fast_api/app.py
+      - models/best_model.pth
+      - data/raw/test/person102_bacteria_487.jpeg 
+

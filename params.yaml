@@ -1,0 +1,37 @@
+preprocessing:
+  img_size: 224
+
+paths:
+  raw_data_dir: "data/raw"
+  processed_data_dir: "data/processed"
+  train_csv_raw: "data/raw/train.csv"
+  test_csv_raw: "data/raw/test.csv"
+  train_img_dir_raw: "data/raw/train"
+  test_img_dir_raw: "data/raw/test"
+  train_csv: "data/processed/train_processed.csv"
+  test_csv: "data/processed/test_processed.csv"
+  model_dir: "models"
+  model_path: "models/best_model.pth"
+  logs_dir: "logs"
+  report_dir: "report"
+
+
+training:
+  batch_size: 32
+  num_epochs: 10
+  learning_rate: 0.001
+  img_size: 224
+  num_workers: 2
+  dropout_rate: 0.3
+
+
+model:
+  num_classes: 4
+  use_attention: true
+  use_residual: true
+
+labels:
+  Bacterial_Pneumonia: 0
+  Covid: 1
+  Normal: 2
+  Viral_Pneumonia: 3

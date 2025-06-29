@@ -1,0 +1,130 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python src/data/preprocess.py
+    deps:
+    - path: data/raw/test.csv
+      hash: md5
+      md5: 8280e4a40289bdca1d9f409f600cd95e
+      size: 31642
+    - path: data/raw/train.csv
+      hash: md5
+      md5: 17d4f3026f0f45447184ebafd4116078
+      size: 238743
+    - path: src/data/preprocess.py
+      hash: md5
+      md5: c8c74e23234edd1b0316b1b9cda0f1fa
+      size: 2613
+    outs:
+    - path: data/processed/test
+      hash: md5
+      md5: 4f390498a4a64f234acffc0480f76a8d.dir
+      size: 6503522
+      nfiles: 784
+    - path: data/processed/test_processed.csv
+      hash: md5
+      md5: 079072e814143e2bd11a075f578940e5
+      size: 23400
+    - path: data/processed/train
+      hash: md5
+      md5: 931c4c703857767039741ced50c9219c.dir
+      size: 38228164
+      nfiles: 5543
+    - path: data/processed/train_processed.csv
+      hash: md5
+      md5: 6facc1515e692ee578e72e0b2d5c29fb
+      size: 166236
+  train:
+    cmd: python src/models/train.py
+    deps:
+    - path: data/processed/test_processed.csv
+      hash: md5
+      md5: 079072e814143e2bd11a075f578940e5
+      size: 23400
+    - path: data/processed/train_processed.csv
+      hash: md5
+      md5: 6facc1515e692ee578e72e0b2d5c29fb
+      size: 166236
+    - path: params.yaml
+      hash: md5
+      md5: f09dd64f687f63c4d546ba5cede416fe
+      size: 759
+    - path: src/data/dataloader.py
+      hash: md5
+      md5: 32dc1f4b675232e8511abecab7acf369
+      size: 2803
+    - path: src/models/model.py
+      hash: md5
+      md5: 77666700350a8a4d6b107018d1b250fa
+      size: 4647
+    - path: src/models/train.py
+      hash: md5
+      md5: a2a27f4849f07723b092b4d31ed4f03e
+      size: 4043
+    params:
+      params.yaml:
+        model.num_classes: 4
+        training.batch_size: 32
+        training.img_size: 224
+        training.learning_rate: 0.001
+        training.num_epochs: 10
+        training.num_workers: 2
+    outs:
+    - path: models/best_model.pth
+      hash: md5
+      md5: f0abb33da5d34c46114638b97ad4a4f5
+      size: 1205429
+  evaluate:
+    cmd: python src/evaluate/evaluate_model.py
+    deps:
+    - path: data/processed/test_processed.csv
+      hash: md5
+      md5: 079072e814143e2bd11a075f578940e5
+      size: 23400
+    - path: models/best_model.pth
+      hash: md5
+      md5: f0abb33da5d34c46114638b97ad4a4f5
+      size: 1205429
+    - path: params.yaml
+      hash: md5
+      md5: f09dd64f687f63c4d546ba5cede416fe
+      size: 759
+    - path: src/data/dataloader.py
+      hash: md5
+      md5: 32dc1f4b675232e8511abecab7acf369
+      size: 2803
+    - path: src/evaluate/evaluate_model.py
+      hash: md5
+      md5: f5ba4bcd2720a43a41f6f923849b1f7f
+      size: 2889
+    - path: src/models/model.py
+      hash: md5
+      md5: 77666700350a8a4d6b107018d1b250fa
+      size: 4647
+    params:
+      params.yaml:
+        model.num_classes: 4
+    outs:
+    - path: report/metrics.json
+      hash: md5
+      md5: db487ec26434bc9cf2411f2665426d6b
+      size: 1746
+  fastapi_test:
+    cmd: pytest tests/test_fastapi_app.py --disable-warnings --maxfail=1
+    deps:
+    - path: data/raw/test/person102_bacteria_487.jpeg
+      hash: md5
+      md5: 65705d86d73ff7cde72a28613db74274
+      size: 80904
+    - path: fast_api/app.py
+      hash: md5
+      md5: 11cca29dfe4d82f4f3e58bfedebf9d1d
+      size: 1332
+    - path: models/best_model.pth
+      hash: md5
+      md5: f0abb33da5d34c46114638b97ad4a4f5
+      size: 1205429
+    - path: tests/test_fastapi_app.py
+      hash: md5
+      md5: 0bdb119e0842d06b3ac2fc297be47b69
+      size: 1037
