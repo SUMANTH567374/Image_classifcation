@@ -49,6 +49,7 @@ stages:
     deps:
       - tests/test_fastapi_app.py
       - fast_api/app.py
+      - fast_api/model_loader.py 
       - models/best_model.pth
       - data/raw/test/person102_bacteria_487.jpeg 
 
