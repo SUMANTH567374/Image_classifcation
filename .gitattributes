@@ -8,6 +8,3 @@
 
 # Unix shell scripts
 *.sh text eol=lf
-
-# Python and other code
-*.py text eol=lf
