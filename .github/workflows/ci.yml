@@ -25,8 +25,9 @@ jobs:
         pip install -r requirements.txt
         pip install dvc[s3]  # adjust if using other remotes like dvc[gs] or dvc[azure]
 
-    - name: Pull data and model from DVC remote
-      run: dvc pull
+    - name: Pull data from DVC remote (force overwrite)
+      run: dvc pull --force
+
 
     - name: Run only the fastapi_test stage
       run: dvc repro fastapi_test
