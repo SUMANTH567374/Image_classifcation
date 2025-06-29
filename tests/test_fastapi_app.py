@@ -37,4 +37,4 @@ def test_predict_endpoint():
 output_file = "tests/fastapi_test_output.txt"
 os.makedirs(os.path.dirname(output_file), exist_ok=True)
 with open(output_file, "w") as f:
-    f.write("✅ All FastAPI tests passed successfully.\n")
+    f.write(" All FastAPI tests passed successfully.\n")

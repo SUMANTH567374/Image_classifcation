@@ -120,11 +120,20 @@ stages:
       hash: md5
       md5: 11cca29dfe4d82f4f3e58bfedebf9d1d
       size: 1332
+    - path: fast_api/model_loader.py
+      hash: md5
+      md5: 85f8bcbfa8db74da71d607e0cf4edb5a
+      size: 1852
     - path: models/best_model.pth
       hash: md5
       md5: f0abb33da5d34c46114638b97ad4a4f5
       size: 1205429
     - path: tests/test_fastapi_app.py
       hash: md5
-      md5: 0bdb119e0842d06b3ac2fc297be47b69
-      size: 1037
+      md5: 39638044ab6f936a0e40b439ffa6385f
+      size: 1380
+    outs:
+    - path: tests/fastapi_test_output.txt
+      hash: md5
+      md5: 69d54c5d9539ce6d43914be40db3a047
+      size: 41
