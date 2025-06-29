@@ -2,8 +2,6 @@
 Lib/
 *.pyc
 __pycache__/
-*.pkl
-*.pth
 *.egg-info/
 *.log
 *.sqlite
