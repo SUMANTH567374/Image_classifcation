@@ -25,7 +25,7 @@ jobs:
         pip install -r requirements.txt
         pip install dvc[s3]  # adjust if using other remotes like dvc[gs] or dvc[azure]
 
-    - name: Pull data from DVC remote (force overwrite)
+    - name: Pull data from DVC
       run: dvc pull --force
 
 
