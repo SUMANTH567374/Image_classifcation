@@ -51,5 +51,6 @@ stages:
       - fast_api/app.py
       - fast_api/model_loader.py 
       - models/best_model.pth
-      - data/raw/test/person102_bacteria_487.jpeg 
-
+      - data/raw/test/person102_bacteria_487.jpeg
+    outs:
+      - tests/fastapi_test_output.txt
